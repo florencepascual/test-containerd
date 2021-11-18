@@ -33,10 +33,10 @@ RUN apt-get install -y --no-install-recommends \
 
 RUN set -eux; \
     url="https://download.docker.com/linux/${DISTRO_NAME}/dists/${DISTRO_VERS}/pool/stable/ppc64el"; \
-    wget "${url}/containerd.io_${CONTAINERD_VERS}*_ppc64el.deb"; \
-    wget "${url}/docker-ce-cli_${DOCKER_VERS}~*~${DISTRO_NAME}-${DISTRO_VERS}_ppc64el.deb"; \
-    wget "${url}/docker-ce-rootless-extras_${DOCKER_VERS}~*~${DISTRO_NAME}-${DISTRO_VERS}_ppc64el.deb"; \
-    wget "${url}/docker-ce_${DOCKER_VERS}~*~${DISTRO_NAME}-${DISTRO_VERS}_ppc64el.deb"; \
+    wget "${url}/containerd.io_${CONTAINERD_VERS}-1_ppc64el.deb"; \
+    wget "${url}/docker-ce-cli_${DOCKER_VERS}~3-0~${DISTRO_NAME}-${DISTRO_VERS}_ppc64el.deb"; \
+    wget "${url}/docker-ce-rootless-extras_${DOCKER_VERS}~3-0~${DISTRO_NAME}-${DISTRO_VERS}_ppc64el.deb"; \
+    wget "${url}/docker-ce_${DOCKER_VERS}~3-0~${DISTRO_NAME}-${DISTRO_VERS}_ppc64el.deb"; \
     dpkg -i *.deb
 
 ##
