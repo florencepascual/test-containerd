@@ -65,13 +65,6 @@ RUN set -eux; \
     chmod +x /usr/local/bin/dockerd-entrypoint.sh; \
     chmod +x /usr/local/bin/test_launch.sh;
 
-RUN set -eux; \
-    url="https://storage.googleapis.com/golang/go${GOLANG_VERSION}.linux-ppc64le.tar.gz";\
-    wget -O go.tgz "$url" --progress=dot:giga; \
-    tar -C /usr/local -xzf go.tgz; \
-    rm go.tgz; \
-    go version;
-
 VOLUME /var/lib/docker
 EXPOSE 2375 2376
 
