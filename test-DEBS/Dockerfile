@@ -56,7 +56,7 @@ ENV DIND_COMMIT 42b1175eda071c0e9121e1d64345928384a93df1
 ENV DOCKERD_COMMIT 8baa881aab85f8398d2edbbcc0da4bd1f556dd98
 # ENV DOCKERD_COMMIT 094faa88f437cafef7aeb0cc36e75b59046cc4b9
 
-COPY test_launch.sh .
+COPY test_launch.sh /usr/local/bin/test_launch.sh
 
 RUN set -eux; \
     wget -O /usr/local/bin/dind "https://raw.githubusercontent.com/docker/docker/${DIND_COMMIT}/hack/dind"; \
