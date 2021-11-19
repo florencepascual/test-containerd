@@ -42,7 +42,9 @@ do
         status_code="$(docker container wait $CONT_NAME)"
 
         if [[ ${status_code} -ne 0 ]]; then
-            docker logs $CONT_NAME 2>&1 | tee ${DIR_TEST}/${TEST_LOG}
+            docker logs $CONT_NAME | tee ${DIR_TEST}/${TEST_LOG}
+        else
+            docker logs $CONT_NAME | tee ${DIR_TEST}/${TEST_LOG}
         fi
         echo "### ### # Cleanup: ${CONT_NAME} # ### ###"
         docker stop ${CONT_NAME}
