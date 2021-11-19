@@ -6,6 +6,7 @@ set -o allexport
 source ${ENV_FILE}
 
 DIR_TEST=test_${DOCKER_VERS}_${CONTAINERD_VERS}
+mkdir $DIR_TEST
 
 LOG=${DIR_TEST}/log_${DOCKER_VERS}.log
 export LOG
