@@ -16,7 +16,7 @@ PATH_DOCKERFILE="test"
 for PACKTYPE in DEBS RPMS
 do
     echo "## Looking for distro type: ${PACKTYPE} ##" 2>&1 | tee -a ${LOG}
-
+    cp test_launch.sh ${PATH_DOCKERFILE}-${PACKTYPE}
     for DISTRO in ${!PACKTYPE}
     do
         echo "## Looking for ${DISTRO} ##" 2>&1 | tee -a ${LOG}
