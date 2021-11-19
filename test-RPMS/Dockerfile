@@ -23,10 +23,11 @@ RUN set -eux; yum -y install wget make gcc findutils procps-ng
 
 RUN set -eux; \
     url="https://download.docker.com/linux/${DISTRO_NAME}/${DISTRO_VERS}/ppc64le/stable/Packages"; \
-    wget "${url}/containerd.io_${CONTAINERD_VERS}*.ppc64le.rpm"; \
-    wget "${url}/docker-ce-cli_${DOCKER_VERS}*.ppc64le.rpm"; \
-    wget "${url}/docker-ce-rootless-extras_${DOCKER_VERS}*.ppc64le.rpm"; \
-    wget "${url}/docker-ce_${DOCKER_VERS}*.ppc64le.rpm"; \
+    if [ "$DISTRO_NAME" = "fedora" ] ; then DISTRO_SHORT="fc" ; else DISTRO_SHORT="el"; fi
+    wget "${url}/containerd.io-${CONTAINERD_VERS}-3.1.${DISTRO_SHORT}${DISTRO_VERS}.ppc64le.rpm"; \
+    wget "${url}/docker-ce-cli-${DOCKER_VERS}-3.${DISTRO_SHORT}${DISTRO_VERS}.ppc64le.rpm"; \
+    wget "${url}/docker-ce-rootless-extras-${DOCKER_VERS}-3.${DISTRO_SHORT}${DISTRO_VERS}.ppc64le.rpm"; \
+    wget "${url}/docker-ce-${DOCKER_VERS}-3.${DISTRO_SHORT}${DISTRO_VERS}.ppc64le.rpm"; \
     yum -y localinstall *.rpm
 
 ##
