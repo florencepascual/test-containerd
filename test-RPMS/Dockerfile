@@ -26,7 +26,7 @@ RUN set -eux; \
     wget "${url}/containerd.io_${CONTAINERD_VERS}*.ppc64le.rpm"; \
     wget "${url}/docker-ce-cli_${DOCKER_VERS}*.ppc64le.rpm"; \
     wget "${url}/docker-ce-rootless-extras_${DOCKER_VERS}*.ppc64le.rpm"; \
-    wget "${url}/docker-ce_${DOCKER_VERS}*.ppc64le.rpm";
+    wget "${url}/docker-ce_${DOCKER_VERS}*.ppc64le.rpm"; \
     yum -y localinstall *.rpm
 
 ##
