@@ -5,7 +5,9 @@ set -ue
 set -o allexport
 source ${ENV_FILE}
 
-LOG=log_${DOCKER_VERS}.log
+DIR_TEST=test_${DOCKER_VERS}_${CONTAINERD_VERS}
+
+LOG=${DIR_TEST}/log_${DOCKER_VERS}.log
 export LOG
 
 PATH_DOCKERFILE="test"
@@ -32,7 +34,7 @@ do
         pushd ${PATH_DOCKERFILE}-${PACKTYPE}
         # Building the test image
         echo "### ## Building the test image: ${IMAGE_NAME} ## ###" 2>&1 | tee -a ${LOG}
-        docker build -t ${IMAGE_NAME} --build-arg DISTRO_NAME=${DISTRO_NAME} --build-arg DISTRO_VERS=${DISTRO_VERS} --build-arg DOCKER_VERS=${DOCKER_VERS} --build-arg CONTAINERD_VERS=${CONTAINERD_VERS} . 2>&1 | tee ${BUILD_LOG}
+        docker build -t ${IMAGE_NAME} --build-arg DISTRO_NAME=${DISTRO_NAME} --build-arg DISTRO_VERS=${DISTRO_VERS} --build-arg DOCKER_VERS=${DOCKER_VERS} --build-arg CONTAINERD_VERS=${CONTAINERD_VERS} . 2>&1 | tee ${DIR_TEST}/${BUILD_LOG}
 
         echo "### ### Running the tests from the container: ${CONT_NAME} ### ###" 2>&1 | tee -a ${LOG}
         docker run -d -v /workspace:/workspace --env DOCKER_SECRET_AUTH --env DISTRO_NAME --env DISTRO_VERS --env LOG --privileged --name ${CONT_NAME} ${IMAGE_NAME}
@@ -40,7 +42,7 @@ do
         status_code="$(docker container wait $CONT_NAME)"
 
         if [[ ${status_code} -ne 0 ]]; then
-            docker logs $CONT_NAME 2>&1 | tee ${TEST_LOG}
+            docker logs $CONT_NAME 2>&1 | tee ${DIR_TEST}/${TEST_LOG}
         fi
         echo "### ### # Cleanup: ${CONT_NAME} # ### ###"
         docker stop ${CONT_NAME}
