@@ -3,7 +3,7 @@
 set -ue
 
 set -o allexport
-source env.list
+source ${ENV_FILE}
 
 LOG=log_${DOCKER_VERS}.log
 export LOG

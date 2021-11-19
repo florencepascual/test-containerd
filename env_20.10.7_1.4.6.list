@@ -1,0 +1,5 @@
+DOCKER_VERS="20.10.7"
+CONTAINERD_VERS="1.4.6"
+
+DEBS="debian-bullseye debian-buster ubuntu-bionic ubuntu-focal ubuntu-groovy ubuntu-hirsute ubuntu-xenial"
+RPMS="fedora-32 fedora-33 fedora-34 centos-7 centos-8"
