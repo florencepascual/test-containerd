@@ -32,10 +32,9 @@ do
         export DISTRO_NAME
         export DISTRO_VERS
 
-        pushd ${PATH_DOCKERFILE}-${PACKTYPE}
         # Building the test image
         echo "### ## Building the test image: ${IMAGE_NAME} ## ###" 2>&1 | tee -a ${LOG}
-        docker build -t ${IMAGE_NAME} --build-arg DISTRO_NAME=${DISTRO_NAME} --build-arg DISTRO_VERS=${DISTRO_VERS} --build-arg DOCKER_VERS=${DOCKER_VERS} --build-arg CONTAINERD_VERS=${CONTAINERD_VERS} . 2>&1 | tee ${DIR_TEST}/${BUILD_LOG}
+        docker build -t ${IMAGE_NAME} --build-arg DISTRO_NAME=${DISTRO_NAME} --build-arg DISTRO_VERS=${DISTRO_VERS} --build-arg DOCKER_VERS=${DOCKER_VERS} --build-arg CONTAINERD_VERS=${CONTAINERD_VERS} ${PATH_DOCKERFILE}-${PACKTYPE} 2>&1 | tee ${DIR_TEST}/${BUILD_LOG}
 
         echo "### ### Running the tests from the container: ${CONT_NAME} ### ###" 2>&1 | tee -a ${LOG}
         docker run -d -v /workspace:/workspace --env DOCKER_SECRET_AUTH --env DISTRO_NAME --env DISTRO_VERS --env LOG --privileged --name ${CONT_NAME} ${IMAGE_NAME}
@@ -49,7 +48,6 @@ do
         docker stop ${CONT_NAME}
         docker rm ${CONT_NAME}
         docker image rm ${IMAGE_NAME}
-	popd
         rm -rf tmp
     done
 done
