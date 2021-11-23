@@ -50,6 +50,5 @@ do
         docker stop ${CONT_NAME}
         docker rm ${CONT_NAME}
         docker image rm ${IMAGE_NAME}
-        rm -rf tmp
     done
 done
