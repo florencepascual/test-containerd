@@ -23,6 +23,11 @@ then
     echo "$DAEMON has not started after $(($TIMEOUT*2)) seconds"
     exit 1
 else
+    while (! docker stats --no-stream)
+    do
+        echo "Waiting for Docker to launch"
+        sleep 1
+    done
     echo "Found $DAEMON pid:$pid"
     if [[ ! -z ${DOCKER_SECRET_AUTH+z} ]] && [ ! -d /root/.docker ]
     then
