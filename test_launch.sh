@@ -6,38 +6,22 @@ set -ue
 bash /usr/local/bin/dockerd-entrypoint.sh &
 
 # Check if the dockerd has started
-TIMEOUT=10
 DAEMON="dockerd"
-i=0
-echo $DAEMON
-while [ $i -lt $TIMEOUT ] && ! /usr/bin/pgrep $DAEMON
+while ! /usr/bin/pgrep $DAEMON && ! docker stats --no-stream
 do
-    i=$((i+1))
+    echo "Waiting for Docker"
     sleep 2
-done
-
-pid=`/usr/bin/pgrep $DAEMON`
-
-if [ -z "$pid" ]
-then
-    echo "$DAEMON has not started after $(($TIMEOUT*2)) seconds"
-    exit 1
-else
-    while (! docker stats --no-stream)
-    do
-        echo "Waiting for Docker to launch"
-        sleep 1
-    done
-    echo "Found $DAEMON pid:$pid"
+    pid=`/usr/bin/pgrep $DAEMON`
+    echo "$DAEMON pid:$pid"  2>&1 | tee -a ${LOG}
     if [[ ! -z ${DOCKER_SECRET_AUTH+z} ]] && [ ! -d /root/.docker ]
     then
         mkdir /root/.docker
         echo "$DOCKER_SECRET_AUTH" > /root/.docker/config.json
-        echo "Docker login"
+        echo "Docker login" 2>&1 | tee -a ${LOG}
     fi
-    echo "Launching docker info"
-    docker info
-fi
+    echo "Launching docker info" 2>&1 | tee -a ${LOG}
+    docker info 2>&1 | tee -a ${LOG}
+done
 
 ctr -v
 
